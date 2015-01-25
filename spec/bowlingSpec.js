@@ -35,7 +35,6 @@ describe("a frame", function() {
     expect(frame.frameScore.roll2).toEqual(0);    
   });
 
-
 });
 
 describe("a game", function() {
@@ -49,6 +48,15 @@ describe("a game", function() {
     expect(score.board[0].total).toEqual(9);
     expect(score.board[0].roll1).toEqual(2);
     expect(score.board[0].roll2).toEqual(7);
+  });
+
+  it("should add the scores for 10 frames", function() {
+    game = new Game();
+    frame = new Frame();
+    score = new Score();
+    spyOn(frame, 'captureRollsScore').and.returnValue({total: 9, roll1: 2, roll2: 7});
+    game.runFrames(score, frame);
+    expect(score.board.length).toEqual(10);    
   });
 
 
