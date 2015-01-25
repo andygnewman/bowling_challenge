@@ -14,23 +14,23 @@ var Frame = function() {
         this._addRoll2Score(pinsDowned);
       }
       rollNumber += 1
-    } while (this.frameScore.total < 10 && rollNumber < 3);
+    } while (this.frameScore.frameTotal < 10 && rollNumber < 3);
   };
 
   Frame.prototype._resetFrameScore = function() {
-    this.frameScore.total = 0;
+    this.frameScore.frameTotal = 0;
     this.frameScore.roll1 = 0;
     this.frameScore.roll2 = 0;
   };
 
   Frame.prototype._addRoll1Score = function(pinsDowned) {
     this.frameScore.roll1 = pinsDowned;
-    this.frameScore.total += pinsDowned;
+    this.frameScore.frameTotal += pinsDowned;
   };
 
   Frame.prototype._addRoll2Score = function(pinsDowned) {
     this.frameScore.roll2 = pinsDowned;
-    this.frameScore.total += pinsDowned;
+    this.frameScore.frameTotal += pinsDowned;
   };
 
 };
