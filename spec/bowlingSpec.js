@@ -19,7 +19,7 @@ describe("a frame", function() {
     frame = new Frame();
     roll = new Roll();
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(4);
-    frame.captureRollScore(roll);
+    frame.captureRollsScore(roll);
     expect(frame.frameScore.total).toEqual(8);
     expect(frame.frameScore.roll1).toEqual(4);
     expect(frame.frameScore.roll2).toEqual(4);
@@ -29,7 +29,7 @@ describe("a frame", function() {
     frame = new Frame();
     roll = new Roll();
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(10);
-    frame.captureRollScore(roll);
+    frame.captureRollsScore(roll);
     expect(frame.frameScore.total).toEqual(10);
     expect(frame.frameScore.roll1).toEqual(10);
     expect(frame.frameScore.roll2).toEqual(0);    
@@ -40,6 +40,16 @@ describe("a frame", function() {
 
 describe("a game", function() {
 
+  it("should add each frame's score to the scoreboard", function() {
+    game = new Game();
+    frame = new Frame();
+    score = new Score();
+    spyOn(frame, 'captureRollsScore').and.returnValue({total: 9, roll1: 2, roll2: 7});
+    game.populateScore(score, frame);
+    expect(score.board[0].total).toEqual(9);
+    expect(score.board[0].roll1).toEqual(2);
+    expect(score.board[0].roll2).toEqual(7);
+  });
 
 
 });
