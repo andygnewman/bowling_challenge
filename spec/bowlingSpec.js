@@ -58,12 +58,13 @@ describe("a game", function() {
     expect(score.board[0].frameTotal).toEqual(9);
     expect(score.board[0].roll1).toEqual(2);
     expect(score.board[0].roll2).toEqual(7);
+    expect(score.board[0].cumulativeTotal).toEqual(9);
   });
 
   it("should add a cumulative score to the scoreboard", function() {
     game.populateScore(score, frame);
     game.populateScore(score, frame);
-    expect(score.board[score.board.length - 1].cumulativeTotal).toEqual(18);    
+    expect(score.board[1].cumulativeTotal).toEqual(18);    
   });
 
   it("should add the scores for 10 frames", function() {

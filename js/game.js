@@ -8,7 +8,7 @@ var Game = function() {
 
   Game.prototype.populateScore = function(score, frame) {
     score.board.push(frame.captureSingleFrameRollsScore());
-    score.refreshPreviousFrameScoreIfStrikeScored();
+    score.refreshPreviousFrameScoreIfSpareScored();
     score.refreshCumulativeScores();
     // if (score.board.length > 1) {
     //   lastCumulativeTotal = score.board[score.board.length - 2].cumulativeTotal;

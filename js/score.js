@@ -4,7 +4,7 @@ var Score = function() {
   this.board = [];
 
   Score.prototype.refreshPreviousFrameScoreIfSpareScored = function() {
-    if (this.board.length > 1 && this.strikeScoredInLastButOneFrame()) {
+    if (this.board.length > 1 && this.spareScoredInLastButOneFrame()) {
       this.board[this.board.length -2].frameTotal += this.board[this.board.length -1].roll1;
     }
   }
@@ -17,17 +17,13 @@ var Score = function() {
 
   Score.prototype.refreshCumulativeScores = function() {
     var self = this;
-    console.log("ScoreBoard length " + self.board.length);
-    for (var framesBowled = 1; framesBowled <= self.board.length; framesBowled ++) {
-      console.log("For loop frames Bowled " + framesBowled);
-      if (framesBowled === 1) {
-        self.board[framesBowled - 1].cumulativeTotal = self.board[framesBowled - 1].frameTotal;
-      }
-      else {
+    self.board[0].cumulativeTotal = self.board[0].frameTotal;
+    if (self.board.length > 1) {
+      for (var framesBowled = 2; framesBowled <= self.board.length; framesBowled ++) {
         self.board[framesBowled - 1].cumulativeTotal = self.board[framesBowled - 2].cumulativeTotal + self.board[framesBowled - 1].frameTotal; 
-      }
-      console.log(self.board[framesBowled - 1]);
+        }
     }
+    console.log(self.board);
   }
 
 
