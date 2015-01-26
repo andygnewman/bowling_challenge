@@ -79,7 +79,7 @@ describe("a game", function() {
 
 describe("a game in which the player scores a strike or spare in the final frame", function() {
 
-  it("should allow another frame to be bowled if the 10th frame has a strike", function() {
+  it("should allow another 2 bowls if the 10th frame has a strike", function() {
     roll = new Roll();
     game = new Game();
     frame = new Frame();
@@ -89,6 +89,18 @@ describe("a game in which the player scores a strike or spare in the final frame
     game.runFrames(score, frame, roll);
     expect(score.board.length).toEqual(10);
     expect(score.board[9].cumulativeTotal).toEqual(300);
+  });
+
+  it("should allow another 1 bowl if the 10th frame has a spare", function() {
+    roll = new Roll();
+    game = new Game();
+    frame = new Frame();
+    score = new Score();
+    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 5, roll2: 5});
+    spyOn(roll, 'pinsDownOnRoll').and.returnValue(4);
+    game.runFrames(score, frame, roll);
+    expect(score.board.length).toEqual(10);
+    expect(score.board[9].cumulativeTotal).toEqual(149);
   });
 
 });
