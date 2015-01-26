@@ -69,7 +69,10 @@ describe("a game", function() {
 
   it("should add the scores for 10 frames", function() {
     game.runFrames(score, frame);
-    expect(score.board.length).toEqual(10);    
+    expect(score.board.length).toEqual(10);
+    expect(score.board[2].cumulativeTotal).toEqual(27);
+    expect(score.board[8].cumulativeTotal).toEqual(81);
+    expect(score.board[9].cumulativeTotal).toEqual(90);    
   });
 
 });
@@ -77,15 +80,18 @@ describe("a game", function() {
 describe("a scoreboard", function() {
 
   it("should add the score of the next bowl if a strike has been scored", function() {
+    roll = new Roll();
     game = new Game();
     frame = new Frame();
     score = new Score();
     spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 8, roll2: 2});
-    game.populateScore(score, frame);
-    game.populateScore(score, frame);
-    expect(score.board[0].frameTotal).toEqual(18);
-    expect(score.board[0].cumulativeTotal).toEqual(18);
-    expect(score.board[1].cumulativeTotal).toEqual(28);
+    game.populateScore(score, frame, roll);
+    expect(score.board[0].frameTotal).toEqual(10);
+    game.populateScore(score, frame, roll);
+    expect(score.board[0].frameTotal).toEqual(14);
+    expect(score.board[1].frameTotal).toEqual(7);
+    expect(score.board[0].cumulativeTotal).toEqual(14);
+    expect(score.board[1].cumulativeTotal).toEqual(21);
   });
 
 

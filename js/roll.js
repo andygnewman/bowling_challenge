@@ -1,7 +1,7 @@
 var Roll = function() {
 
   Roll.prototype.pinsDownOnRoll = function(rollNumber) {
-    return parseInt(this.capturePinsDown());
+    return parseInt(this.capturePinsDown(rollNumber));
   };
 
   Roll.prototype.capturePinsDown = function(rollNumber, error) {

@@ -2,19 +2,32 @@ var Frame = function() {
 
   this.frameScore = {};
 
+  Frame.prototype.getClonedFrameScore = function(frameScore) {
+    var clone = {};
+    for (var key in frameScore) {
+      if (frameScore.hasOwnProperty(key)) {
+        clone[key] = frameScore[key];
+      }
+    }
+    return clone;
+  }
+
+
   Frame.prototype.captureSingleFrameRollsScore = function(roll) {
     this._resetFrameScore();
+    var self = this;
     rollNumber = 1;
     do {
       pinsDowned = roll.pinsDownOnRoll(rollNumber);
       if (rollNumber === 1) {
-        this._addRoll1Score(pinsDowned);
+        self._addRoll1Score(pinsDowned);
       }
       else {
-        this._addRoll2Score(pinsDowned);
+        self._addRoll2Score(pinsDowned);
       }
       rollNumber += 1
-    } while (this.frameScore.frameTotal < 10 && rollNumber < 3);
+    } while (self.frameScore.frameTotal < 10 && rollNumber < 3);
+    return this.frameScore ;
   };
 
   Frame.prototype._resetFrameScore = function() {

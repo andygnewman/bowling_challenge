@@ -1,23 +1,15 @@
 var Game = function() {
 
-  Game.prototype.runFrames = function(score, frame) {
+  Game.prototype.runFrames = function(score, frame, roll) {
+    var self = this;
     for (var frameNumber = 1; frameNumber <= 10; frameNumber ++) {
-      this.populateScore(score, frame);
+      self.populateScore(score, frame);
     }
   };
 
-  Game.prototype.populateScore = function(score, frame) {
-    score.board.push(frame.captureSingleFrameRollsScore());
-    score.refreshPreviousFrameScoreIfSpareScored();
+  Game.prototype.populateScore = function(score, frame, roll) {
+    score.board.push(frame.getClonedFrameScore(frame.captureSingleFrameRollsScore(roll)));
     score.refreshCumulativeScores();
-    // if (score.board.length > 1) {
-    //   lastCumulativeTotal = score.board[score.board.length - 2].cumulativeTotal;
-    //   thisTotalScore = score.board[score.board.length - 1].frameTotal;
-    //   score.board[score.board.length - 1].cumulativeTotal = lastCumulativeTotal + thisTotalScore;
-    // }
-    // else {
-    //   score.board[score.board.length - 1].cumulativeTotal = score.board[score.board.length - 1].frameTotal;     
-    // }
   };
 
 };
