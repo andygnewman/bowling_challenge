@@ -2,7 +2,7 @@ var Frame = function() {
 
   this.frameScore = {};
 
-  Frame.prototype.captureRollsScore = function(roll) {
+  Frame.prototype.captureSingleFrameRollsScore = function(roll) {
     this._resetFrameScore();
     rollNumber = 1;
     do {
