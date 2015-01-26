@@ -23,21 +23,23 @@ describe("a frame", function() {
   it("should capture the score from two rolls if the total is less than 10", function() {
     frame = new Frame();
     roll = new Roll();
+    score = new Score();
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(4);
-    frame.captureSingleFrameRollsScore(roll);
-    expect(frame.frameScore.frameTotal).toEqual(8);
-    expect(frame.frameScore.roll1).toEqual(4);
-    expect(frame.frameScore.roll2).toEqual(4);
+    frame.putFrameScoreInScoreBoard(score, roll);
+    expect(score.board[0].frameTotal).toEqual(8);
+    expect(score.board[0].roll1).toEqual(4);
+    expect(score.board[0].roll1).toEqual(4);
   });
 
   it("should capture the score from only one roll if the score on the first roll is 10", function() {
     frame = new Frame();
+    score = new Score();
     roll = new Roll();
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(10);
-    frame.captureSingleFrameRollsScore(roll);
-    expect(frame.frameScore.frameTotal).toEqual(10);
-    expect(frame.frameScore.roll1).toEqual(10);
-    expect(frame.frameScore.roll2).toEqual(0);    
+    frame.putFrameScoreInScoreBoard(score, roll);
+    expect(score.board[0].frameTotal).toEqual(10);
+    expect(score.board[0].roll1).toEqual(10);
+    expect(score.board[0].roll2).toEqual(0);    
   });
 
 });
@@ -50,7 +52,7 @@ describe("a game", function() {
     game = new Game();
     frame = new Frame();
     score = new Score();
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 9, roll1: 2, roll2: 7});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 9, roll1: 2, roll2: 7});
   });
 
   it("should add each frame's score to the scoreboard", function() {
@@ -84,7 +86,7 @@ describe("a game in which the player scores a strike or spare in the final frame
     game = new Game();
     frame = new Frame();
     score = new Score();
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 10, roll2: 0});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 10, roll2: 0});
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(10);
     game.runFrames(score, frame, roll);
     expect(score.board.length).toEqual(10);
@@ -96,7 +98,7 @@ describe("a game in which the player scores a strike or spare in the final frame
     game = new Game();
     frame = new Frame();
     score = new Score();
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 5, roll2: 5});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 5, roll2: 5});
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(4);
     game.runFrames(score, frame, roll);
     expect(score.board.length).toEqual(10);
@@ -115,7 +117,7 @@ describe("a scoreboard", function() {
   });
 
   it("should add the score of the next bowl if a spare has been scored", function() {
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 8, roll2: 2});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 8, roll2: 2});
     game.populateScore(score, frame, roll);
     game.populateScore(score, frame, roll);
     expect(score.board[0].frameTotal).toEqual(18);
@@ -125,7 +127,7 @@ describe("a scoreboard", function() {
 
   it("should add the score of the next two rolls to the frame with the strike (assume not strike on next frame)", function() {
     score.board = [{cumulativeTotal: 10, frameTotal: 10, roll1: 10, roll2: 0}];
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 7, roll1: 3, roll2: 4});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 7, roll1: 3, roll2: 4});
     game.populateScore(score, frame, roll);
     expect(score.board[0].frameTotal).toEqual(17);
     expect(score.board[1].cumulativeTotal).toEqual(24);
@@ -133,7 +135,7 @@ describe("a scoreboard", function() {
 
   it("should add the score of the next two rolls to the frame with the strike (assume strike on next frame)", function() {
     score.board = [{cumulativeTotal: 20, frameTotal: 20, roll1: 10, roll2: 0}, {cumulativeTotal: 30, frameTotal: 10, roll1: 10, roll2: 0}];
-    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 7, roll1: 3, roll2: 4});
+    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 7, roll1: 3, roll2: 4});
     game.populateScore(score, frame, roll);
     expect(score.board[0].frameTotal).toEqual(23);
     expect(score.board[1].frameTotal).toEqual(17);
