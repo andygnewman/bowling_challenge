@@ -30,3 +30,16 @@ A Gutter Game is when the player never hits a pin (20 zero scores).
 #### Perfect Game
 
 A Perfect Game is when the player rolls 12 strikes (10 regular strikes and 2 strikes for the bonus in the 10th frame). The Perfect Game scores to 300 points.
+
+
+##Notes from undertaking the challenge
+As always the tough part of this was determining the "class" responsibilities, which we hadn't encountered in the thermostat walkthrough.
+The model I came up with;
+- roll => captures input of number of pins downed
+- frame => determines how many rolls in a frame (eg. if get strike on 1st bowl), executes them and keeps the framescore
+- score => calculates cumulative scores, managing the extra points for strikes and spares
+- game => controls the frames, takes the score from the frame and puts it in the score(board) and runs any extra bowls required for strikes / spares in the final frame.
+
+I'm reasonably comfortable with this against solid principles, though am sure there is room for improvement.
+
+Next steps would be to create a front end for the scoreboard, including a mechanic to get the user to input the number of pins downed. This input should be along the lines of a drop down box of pre-selected values (eg. 1st bowl 0 - 10, 2nd bowl, if required, 0 - (10 - the result of bowl 1)). 
