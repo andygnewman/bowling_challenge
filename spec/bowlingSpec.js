@@ -79,19 +79,29 @@ describe("a game", function() {
 
 describe("a scoreboard", function() {
 
-  it("should add the score of the next bowl if a strike has been scored", function() {
+  it("should add the score of the next bowl if a spare has been scored", function() {
     roll = new Roll();
     game = new Game();
     frame = new Frame();
     score = new Score();
     spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 8, roll2: 2});
     game.populateScore(score, frame, roll);
-    expect(score.board[0].frameTotal).toEqual(10);
     game.populateScore(score, frame, roll);
-    expect(score.board[0].frameTotal).toEqual(14);
-    expect(score.board[1].frameTotal).toEqual(7);
-    expect(score.board[0].cumulativeTotal).toEqual(14);
-    expect(score.board[1].cumulativeTotal).toEqual(21);
+    expect(score.board[0].frameTotal).toEqual(18);
+    expect(score.board[0].cumulativeTotal).toEqual(18);
+    expect(score.board[1].cumulativeTotal).toEqual(28);
+  });
+
+  it("should add the score of the next two rolls to the frame with the strike", function() {
+    roll = new Roll();
+    game = new Game();
+    frame = new Frame();
+    score = new Score();
+    score.board = [{cumulativeTotal: 10, frameTotal: 10, roll1: 10, roll2: 0}, {cumulativeTotal: 18, frameTotal: 8, roll1: 3, roll2: 5}];
+    spyOn(frame, 'captureSingleFrameRollsScore').and.returnValue({frameTotal: 7, roll1: 3, roll2: 4});
+    game.populateScore(score, frame, roll);
+    expect(score.board[0].frameTotal).toEqual(18);
+    expect(score.board[2].cumulativeTotal).toEqual(33);
   });
 
 
