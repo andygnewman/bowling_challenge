@@ -1,20 +1,21 @@
 var Game = function() {
 
-  Game.prototype.runFrames = function(score, frame, roll) {
+  Game.prototype.runFrames = function(frame, score, roll) {
     var self = this;
     for (var frameNumber = 1; frameNumber <= 10; frameNumber ++) {
-      self.populateScore(score, frame);
+      self.populateScore(frame, score, roll);
     }
     this._extraBowlsRoutine(score, roll);
-    for (var i = 1; i < score.board.length; i++) {
-      console.log(score.board[i].cumulativeTotal);
-    }
   };
 
-  Game.prototype.populateScore = function(score, frame, roll) {
-    frame.putFrameScoreInScoreBoard(score, roll);
+  Game.prototype.populateScore = function(frame, score, roll) {
+    this._putFrameScoreInScoreBoard(frame, score, roll);
     score.refreshCumulativeScores();
   };
+
+  Game.prototype._putFrameScoreInScoreBoard = function(frame, score, roll) {
+    score.board.push(frame.getFrameScore(roll));  
+  }
 
   Game.prototype._extraBowlsRoutine = function(score, roll) {
     if (score.board[9].frameTotal === 10) {

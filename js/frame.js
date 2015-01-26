@@ -2,11 +2,12 @@ var Frame = function() {
 
   this.frameScore = {};
 
-  Frame.prototype.putFrameScoreInScoreBoard = function(score, roll) {
-    score.board.push(this._getClonedFrameScore(this._captureSingleFrameRollsScore(roll)));  
+  Frame.prototype.getFrameScore = function(roll) {
+    return this._cloneFrameScoreObject(this._captureSingleFrameRollsScore(roll));  
   }
 
-  Frame.prototype._getClonedFrameScore = function(frameScore) {
+  Frame.prototype._cloneFrameScoreObject = function(frameScore) {
+    console.log(frameScore);
     var clone = {};
     for (var key in frameScore) {
       if (frameScore.hasOwnProperty(key)) {
@@ -23,10 +24,12 @@ var Frame = function() {
     do {
     pinsDowned = roll.pinsDownOnRoll(rollNumber);
     if (rollNumber === 1) {
-      self._addRoll1Score(pinsDowned);
+      self.frameScore.roll1 = pinsDowned;
+      self.frameScore.frameTotal += pinsDowned;
     }
     else {
-      self._addRoll2Score(pinsDowned);
+      self.frameScore.roll2 = pinsDowned;
+      self.frameScore.frameTotal += pinsDowned;
     }
     rollNumber += 1    
     } while (self.frameScore.frameTotal < 10 && rollNumber < 3);
