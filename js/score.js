@@ -13,10 +13,15 @@ var Score = function() {
   Score.prototype.getScore = function(frameIndex, property) {
     if (this.board[frameIndex]) {
       frame = this.board[frameIndex];
-      return frame[property];
+      if (frame[property]) {
+        return frame[property];  
+      }
+      else {
+        return ""
+      }
     }
     else {
-      return "-";
+      return "";
     }
   }
 
