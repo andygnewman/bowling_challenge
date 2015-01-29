@@ -9,7 +9,6 @@ var Frame = function() {
   }
 
   Frame.prototype._cloneFrameScoreObject = function(frameScore) {
-    console.log(frameScore);
     var clone = {};
     for (var key in frameScore) {
       if (frameScore.hasOwnProperty(key)) {
@@ -27,7 +26,7 @@ var Frame = function() {
       rollNumber += 1;
     } while (this.frameScore.frameTotal < 10 && rollNumber < 3);
 
-    if (this.framesNumber === 10) {
+    if (this.frameNumber === 10) {
       this._extraBowlsRoutine();
     }
     this.frameNumber += 1;
@@ -75,12 +74,12 @@ var Frame = function() {
   }
 
   Frame.prototype._firstExtraBowl = function() {
-    this.frameScore.roll3 = this.roll.pinsDownOnRoll(this.FrameNumber, 3);
+    this.frameScore.roll3 = this.roll.pinsDownOnRoll(this.frameNumber, 3);
     this.frameScore.frameTotal += this.frameScore.roll3;
   }
 
   Frame.prototype._secondExtraBowl = function() {
-    this.frameScore.roll4 = this.roll.pinsDownOnRoll(this.FrameNumber, 4);
+    this.frameScore.roll4 = this.roll.pinsDownOnRoll(this.frameNumber, 4);
     this.frameScore.frameTotal += this.frameScore.roll4;
   }
 

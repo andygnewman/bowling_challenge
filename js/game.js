@@ -1,5 +1,6 @@
 var Game = function() {
 
+this.roll = new Roll();
 this.frame = new Frame();
 this.score = new Score();
 
@@ -8,18 +9,18 @@ this.scoreBoard = "hello world";
   Game.prototype.runFrames = function() {
     var self = this;
     for (var frameNumber = 1; frameNumber <= 10; frameNumber ++) {
-      self.populateScore(self.frame, self.score);
+      self.populateScore(self.roll);
     }
   };
 
-  Game.prototype.populateScore = function() {
-    this._putFrameScoreInScoreBoard();
+  Game.prototype.populateScore = function(roll) {
+    this._putFrameScoreInScoreBoard(roll);
     this.score.refreshCumulativeScores();
     this.populateScoreBoard();
   };
 
-  Game.prototype._putFrameScoreInScoreBoard = function() {
-    this.score.board.push(this.frame.getFrameScore());  
+  Game.prototype._putFrameScoreInScoreBoard = function(roll) {
+    this.score.board.push(this.frame.getFrameScore(roll));  
   }
 
   Game.prototype.populateScoreBoard = function() {
