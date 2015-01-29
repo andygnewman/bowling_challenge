@@ -43,15 +43,27 @@ var Score = function() {
     previousFrame = this.board[this.board.length - 2];
     thisFrame =  this.board[this.board.length - 1];
     twoFramesAgo = this.board[this.board.length - 3];
+    this._strikeOnPreviousFrame(previousFrame, thisFrame);
+    this._strikeTwoFramesAgo(previousFrame, thisFrame, twoFramesAgo);
+    this._stikePreviousFrameAndFinalFrame(previousFrame, thisFrame);
+  }
+
+  Score.prototype._strikeOnPreviousFrame = function(previousFrame, thisFrame) {
     if (this._checkWhetherStrikeScoredOnPreviousFrame(previousFrame)) {
       this._addAdditionalScoreForStrike(previousFrame, thisFrame);
-    }
+    }  
+  }
+
+  Score.prototype._strikeTwoFramesAgo = function(previousFrame, thisFrame, twoFramesAgo) {
     if (this.board.length > 2 && twoFramesAgo.roll1 === 10 && previousFrame.roll1 === 10) {
       this._addAdditionalScoreForConsecutiveStrikes(twoFramesAgo, thisFrame);
-    }
+    }    
+  }
+
+  Score.prototype._stikePreviousFrameAndFinalFrame = function(previousFrame, thisFrame) {
     if (this.board.length === 10 && previousFrame.roll1 === 10 && thisFrame.roll1 === 10) {
       previousFrame.frameTotal += thisFrame.roll3;
-    }
+    }    
   }
 
   Score.prototype._checkWhetherStrikeScoredOnPreviousFrame = function(previousFrame) {

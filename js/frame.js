@@ -39,7 +39,7 @@ var Frame = function() {
   }
 
   Frame.prototype._standardFrameRoutine = function(roll, rollNumber) {
-    pinsDowned = roll.pinsDownOnRoll(rollNumber);
+    pinsDowned = roll.pinsDownOnRoll(this.frameNumber, rollNumber);
     this._addRollScores(pinsDowned, rollNumber);
   }
 
@@ -73,12 +73,12 @@ var Frame = function() {
   }
 
   Frame.prototype._firstExtraBowl = function(roll) {
-    this.frameScore.roll3 = roll.pinsDownOnRoll(3);
+    this.frameScore.roll3 = roll.pinsDownOnRoll(this.FrameNumber, 3);
     this.frameScore.frameTotal += this.frameScore.roll3;
   }
 
   Frame.prototype._secondExtraBowl = function(roll) {
-    this.frameScore.roll4 = roll.pinsDownOnRoll(4);
+    this.frameScore.roll4 = roll.pinsDownOnRoll(this.FrameNumber, 4);
     this.frameScore.frameTotal += this.frameScore.roll4;
   }
 

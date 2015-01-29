@@ -36,28 +36,26 @@ describe("a game", function() {
 
 describe("a game in which the player scores a strike or spare in the final frame", function() {
 
-  it("should allow another 2 bowls if the 10th frame has a strike", function() {
+  it("should score 300 if a player scores a strike on every bowl", function() {
     roll = new Roll();
     game = new Game();
     frame = new Frame();
     score = new Score();
-    // spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 10, roll2: 0});
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(10);
     game.runFrames(frame, score, roll);
     expect(score.board.length).toEqual(10);
     expect(score.board[9].cumulativeTotal).toEqual(300);
   });
 
-  it("should allow another 1 bowl if the 10th frame has a spare", function() {
+  it("should score 150 if a player scores 5 on every bowl ie a spare in each frame and a 5 on single bonus ball in the 10th", function() {
     roll = new Roll();
     game = new Game();
     frame = new Frame();
     score = new Score();
-    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 5, roll2: 5});
-    spyOn(roll, 'pinsDownOnRoll').and.returnValue(4);
+    spyOn(roll, 'pinsDownOnRoll').and.returnValue(5);
     game.runFrames(frame, score, roll);
     expect(score.board.length).toEqual(10);
-    expect(score.board[9].cumulativeTotal).toEqual(149);
+    expect(score.board[9].cumulativeTotal).toEqual(150);
   });
 
 });
