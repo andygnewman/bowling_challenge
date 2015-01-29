@@ -41,7 +41,7 @@ describe("a game in which the player scores a strike or spare in the final frame
     game = new Game();
     frame = new Frame();
     score = new Score();
-    spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 10, roll2: 0});
+    // spyOn(frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 10, roll1: 10, roll2: 0});
     spyOn(roll, 'pinsDownOnRoll').and.returnValue(10);
     game.runFrames(frame, score, roll);
     expect(score.board.length).toEqual(10);

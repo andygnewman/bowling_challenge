@@ -5,16 +5,24 @@ var Score = function() {
 
   Score.prototype.refreshCumulativeScores = function() {
     if (this.board.length > 1) {
-      this._checkForSpare();
-      this._checkForStrike();
+      this._checkForSparesAndStrikes();
     }
+    this._iterateOverFramesForCumulativeScores();
+  }
+
+  Score.prototype._iterateOverFramesForCumulativeScores = function() {
     var self = this;
     self.board[0].cumulativeTotal = self.board[0].frameTotal;
     if (self.board.length > 1) {
       for (var frames = 2; frames < self.board.length + 1; frames += 1) {
       self.board[frames - 1].cumulativeTotal = self.board[frames - 2].cumulativeTotal + self.board[frames - 1].frameTotal;
       }
-    }
+    }    
+  }
+
+  Score.prototype._checkForSparesAndStrikes = function() {
+    this._checkForSpare();
+    this._checkForStrike();
   }
 
   Score.prototype._checkForSpare = function() {
@@ -40,6 +48,9 @@ var Score = function() {
     }
     if (this.board.length > 2 && twoFramesAgo.roll1 === 10 && previousFrame.roll1 === 10) {
       this._addAdditionalScoreForConsecutiveStrikes(twoFramesAgo, thisFrame);
+    }
+    if (this.board.length === 10 && previousFrame.roll1 === 10 && thisFrame.roll1 === 10) {
+      previousFrame.frameTotal += thisFrame.roll3;
     }
   }
 
