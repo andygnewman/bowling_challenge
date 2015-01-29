@@ -1,6 +1,6 @@
 var Score = function() {
 
-  var board;
+  // var board;
   this.board = [];
 
   Score.prototype.refreshCumulativeScores = function() {
@@ -8,6 +8,16 @@ var Score = function() {
       this._checkForSparesAndStrikes();
     }
     this._iterateOverFramesForCumulativeScores();
+  }
+
+  Score.prototype.getScore = function(frameIndex, property) {
+    if (this.board[frameIndex]) {
+      frame = this.board[frameIndex];
+      return frame[property];
+    }
+    else {
+      return "-";
+    }
   }
 
   Score.prototype._iterateOverFramesForCumulativeScores = function() {
