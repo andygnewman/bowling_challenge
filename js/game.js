@@ -5,15 +5,8 @@ this.score = new Score();
 
 this.scoreBoard = "hello world";
 
-  Game.prototype.runFrames = function() {
-    var self = this;
-    for (var frameNumber = 1; frameNumber <= 10; frameNumber ++) {
-      self.populateScore(self.roll);
-    }
-  };
-
   Game.prototype.populateScore = function() {
-    console.log(this._putFrameScoreInScoreBoard());
+
     this._putFrameScoreInScoreBoard();
     this.score.refreshCumulativeScores();
     this.populateScoreBoard();
@@ -35,8 +28,8 @@ this.scoreBoard = "hello world";
   }
 
   Game.prototype.populateScoreBoard = function() {
-    arrayVariables = ["roll1", "roll2", "roll3", "roll4", "cumulativeTotal"];
-    this.scoreBoard = "<tr><td>Frame</td><td>Roll 1</td><td>Roll 2</td><td>Bonus 1</td><td>Bonus 2</td><td>Total</td></tr>";
+    arrayVariables = ["roll1", "roll2", "roll3", "cumulativeTotal"];
+    this.scoreBoard = "<tr><td>Frame</td><td>Roll 1</td><td>Roll 2</td><td>Bonus 1</td><td>Total</td></tr>";
     for (var i = 0; i < 10; i++) {
       this.scoreBoard += "<tr><td>" + (i + 1) + "</td>";
         for (var x = 0; x < arrayVariables.length; x++) {
