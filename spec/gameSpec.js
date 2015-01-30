@@ -5,11 +5,11 @@ describe("a game", function() {
   beforeEach(function() {
     game = new Game();
 
-    spyOn(game.frame, '_captureSingleFrameRollsScore').and.returnValue({frameTotal: 9, roll1: 2, roll2: 7});
+    spyOn(game.frame, 'passFrameScore').and.returnValue({frameTotal: 9, roll1: 2, roll2: 7});
   });
 
   it("should add each frame's score to the scoreboard", function() {
-    game.populateScore(game.roll);
+    game.populateScore();
     expect(game.score.board[0].frameTotal).toEqual(9);
     expect(game.score.board[0].roll1).toEqual(2);
     expect(game.score.board[0].roll2).toEqual(7);
@@ -17,13 +17,13 @@ describe("a game", function() {
   });
 
   it("should add a cumulative score to the scoreboard", function() {
-    game.populateScore(game.roll);
-    game.populateScore(game.roll);
+    game.populateScore();
+    game.populateScore();
     expect(game.score.board[1].cumulativeTotal).toEqual(18);    
   });
 
   it("should add the scores for 10 frames", function() {
-    game.runFrames(game.roll);
+    game.runFrames();
     expect(game.score.board.length).toEqual(10);
     expect(game.score.board[2].cumulativeTotal).toEqual(27);
     expect(game.score.board[8].cumulativeTotal).toEqual(81);

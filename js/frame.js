@@ -4,6 +4,7 @@ var Frame = function() {
   this.frameScore = {};
   this.rollScore = 0;
   this.gameOver = false;
+  this.newFrame = true;
 
   Frame.prototype.updateRollScore = function(userRollScore) {
     this.rollScore = parseInt(userRollScore);
@@ -14,9 +15,30 @@ var Frame = function() {
     this._advanceRoll();
   }
 
+  Frame.prototype.passFrameScore = function() {
+    var clone = {};
+    var self = this;
+    for (var key in self.frameScore) {
+      if (self.frameScore.hasOwnProperty(key)) {
+        clone[key] = self.frameScore[key];
+      }
+    }
+    return clone;    
+  }
+
+  Frame.prototype.resetFrameScore = function() {
+    this.frameScore.frameTotal = 0;
+    this.frameScore.roll1 = 0;
+    this.frameScore.roll2 = 0;
+    this.frameNew = true;
+  }
+
   Frame.prototype._updateFrameWithScore = function() {
     this.frameScore["roll" + this.rollTracker.rollNumber] = this._getRollScore();
     this.frameScore.frameTotal += this._getRollScore();
+    if (this.rollTracker.rollNumber === 2) {
+      this.frameNew = false;
+    }
   }
 
   Frame.prototype._advanceRoll = function() {
@@ -76,13 +98,9 @@ var Frame = function() {
   Frame.prototype._normalFrameRoll2OrRoll1Strike = function() {
     this.rollTracker.frameNumber += 1;
     this.rollTracker.rollNumber = 1;
-    this.rollTracker.maxRollScore = 10;    
+    this.rollTracker.maxRollScore = 10;   
   }
 
-  Frame.prototype._resetFrameScore = function() {
-    this.frameScore.frameTotal = 0;
-    this.frameScore.roll1 = 0;
-    this.frameScore.roll2 = 0;
-  }
+
 
 };

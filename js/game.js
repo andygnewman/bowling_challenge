@@ -12,14 +12,26 @@ this.scoreBoard = "hello world";
     }
   };
 
-  Game.prototype.populateScore = function(roll) {
-    this._putFrameScoreInScoreBoard(roll);
+  Game.prototype.populateScore = function() {
+    console.log(this._putFrameScoreInScoreBoard());
+    this._putFrameScoreInScoreBoard();
     this.score.refreshCumulativeScores();
     this.populateScoreBoard();
   };
 
-  Game.prototype._putFrameScoreInScoreBoard = function(roll) {
-    this.score.board.push(this.frame.getFrameScore(roll));  
+  Game.prototype._putFrameScoreInScoreBoard = function() {
+    if (this.frame.frameNew) {
+      this.score.board.push(this.frame.passFrameScore()); 
+    }
+    else {
+      if (this.score.board.length === 0) {
+        this.score.board[this.score.board.length] = this.frame.passFrameScore();
+      }
+      else {
+        this.score.board[this.score.board.length - 1] = this.frame.passFrameScore();
+      }
+    }
+ 
   }
 
   Game.prototype.populateScoreBoard = function() {
