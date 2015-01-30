@@ -1,6 +1,5 @@
 var Game = function() {
 
-this.roll = new Roll();
 this.frame = new Frame();
 this.score = new Score();
 
