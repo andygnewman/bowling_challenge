@@ -71,13 +71,15 @@ var Score = function() {
 
   Score.prototype._strikeTwoFramesAgo = function(previousFrame, thisFrame, twoFramesAgo) {
     if (this.board.length > 2 && twoFramesAgo.roll1 === 10 && previousFrame.roll1 === 10) {
-      this._addAdditionalScoreForConsecutiveStrikes(twoFramesAgo, thisFrame);
+      this._addAdditionalScoreForConsecutiveStrikes(twoFramesAgo, previousFrame, thisFrame);
     }    
   }
 
   Score.prototype._stikePreviousFrameAndFinalFrame = function(previousFrame, thisFrame) {
     if (this.board.length === 10 && previousFrame.roll1 === 10 && thisFrame.roll1 === 10) {
-      previousFrame.frameTotal += thisFrame.roll3;
+      if (previousFrame.frameTotal !== previousFrame.roll1 + thisFrame.roll1 + thisFrame.roll2) {
+        previousFrame.frameTotal += thisFrame.roll2;
+      }
     }    
   }
 
@@ -96,8 +98,10 @@ var Score = function() {
     }
   }
 
-  Score.prototype._addAdditionalScoreForConsecutiveStrikes = function(twoFramesAgo, thisFrame) {
-    twoFramesAgo.frameTotal += thisFrame.roll1;
+  Score.prototype._addAdditionalScoreForConsecutiveStrikes = function(twoFramesAgo, previousFrame, thisFrame) {
+    if (twoFramesAgo.frameTotal !== (twoFramesAgo.roll1 + previousFrame.roll1 + thisFrame.roll1)) {
+      twoFramesAgo.frameTotal += thisFrame.roll1;   
+    }
   }
 
 };

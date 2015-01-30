@@ -4,6 +4,34 @@ describe("a scoreboard", function() {
     score = new Score();
   });
 
+  var rollPerfectGame = function() {
+    score.board = [{frameTotal:10, roll1: 10, roll2: 0}];
+    score.refreshCumulativeScores();
+    for (var i = 0; i < 8; i++) {
+      score.board.push({frameTotal:10, roll1: 10, roll2: 0});
+      score.refreshCumulativeScores();
+    }
+    score.board[9] = {frameTotal:10, roll1: 10, roll2: 10};
+    score.refreshCumulativeScores();
+    score.board[9] = {frameTotal:10, roll1: 10, roll2: 10, roll3: 10};
+    score.refreshCumulativeScores();
+  }
+
+    var rollFiveEachBall = function() {
+    score.board = [{frameTotal:5, roll1: 5, roll2: 0}];
+    score.refreshCumulativeScores();
+    score.board[0] = {frameTotal:10, roll1: 5, roll2: 5};
+    score.refreshCumulativeScores();
+    for (var i = 0; i < 9; i++) {
+      score.board.push({frameTotal:5, roll1: 5, roll2: 0});
+      score.refreshCumulativeScores();
+      score.board[score.board.length -1] = {frameTotal:10, roll1: 5, roll2: 5};
+      score.refreshCumulativeScores();
+    }
+    score.board[9] = {frameTotal:15, roll1: 5, roll2: 5, roll3: 5};
+    score.refreshCumulativeScores();
+  }
+
   it("should add a cumulative score to the frame in the scoreboard - one ball bowled in frame", function() {
     score.board = [{frameTotal: 7, roll1: 7, roll2: 0}];
     score.refreshCumulativeScores();
@@ -107,7 +135,6 @@ describe("a scoreboard", function() {
     score.board = [{cumulativeTotal: 20, frameTotal: 20, roll1: 10, roll2: 0}];
     score.board.push({cumulativeTotal: 30, frameTotal: 10, roll1: 10, roll2: 0});    
     score.board.push({frameTotal: 10, roll1: 10, roll2: 0});
-    console.log(score.board);
     score.refreshCumulativeScores();
     expect(score.board[0].frameTotal).toEqual(30);
     expect(score.board[0].cumulativeTotal).toEqual(30);
@@ -134,6 +161,17 @@ describe("a scoreboard", function() {
     expect(score.board[0].frameTotal).toEqual(23);
     expect(score.board[1].frameTotal).toEqual(17);
     expect(score.board[2].cumulativeTotal).toEqual(47);
+  });
+
+  it("should score a perfect game of 300", function() {
+    rollPerfectGame();
+    expect(score.board[9].cumulativeTotal).toEqual(300);
+  });
+
+  it("should score a game where 5 pins are knocked down with each bowl as 150", function() {
+    rollFiveEachBall();
+    console.log(score.board);
+    expect(score.board[9].cumulativeTotal).toEqual(150);
   });
 
 });
