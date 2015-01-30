@@ -88,8 +88,12 @@ var Score = function() {
   }  
 
   Score.prototype._addAdditionalScoreForStrike = function(previousFrame, thisFrame) {
-    previousFrame.frameTotal += thisFrame.roll1;
-    previousFrame.frameTotal += thisFrame.roll2;
+    if (previousFrame.frameTotal === (previousFrame.roll1 + thisFrame.roll1)) {
+      previousFrame.frameTotal += thisFrame.roll2;      
+    }
+    else {
+      previousFrame.frameTotal += thisFrame.roll1;
+    }
   }
 
   Score.prototype._addAdditionalScoreForConsecutiveStrikes = function(twoFramesAgo, thisFrame) {
