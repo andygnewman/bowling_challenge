@@ -1,86 +1,88 @@
 var Frame = function() {
 
-  this.roll = new Roll();
+  this.rollTracker = {frameNumber: 1, rollNumber: 1, maxRollScore: 10};
   this.frameScore = {};
-  this.frameNumber = 1;
+  this.rollScore = 0;
+  this.gameOver = false;
 
-  Frame.prototype.getFrameScore = function() {
-    return this._cloneFrameScoreObject(this._captureSingleFrameRollsScore(this.roll));  
+  Frame.prototype.updateRollScore = function(userRollScore) {
+    this.rollScore = parseInt(userRollScore);
   }
 
-  Frame.prototype._cloneFrameScoreObject = function(frameScore) {
-    var clone = {};
-    for (var key in frameScore) {
-      if (frameScore.hasOwnProperty(key)) {
-        clone[key] = frameScore[key];
+  Frame.prototype.updateFrameWithScoreAndAdvanceRoll = function() {
+    this._updateFrameWithScore();
+    this._advanceRoll();
+  }
+
+  Frame.prototype._updateFrameWithScore = function() {
+    this.frameScore["roll" + this.rollTracker.rollNumber] = this._getRollScore();
+    this.frameScore.frameTotal += this._getRollScore();
+  }
+
+  Frame.prototype._advanceRoll = function() {
+    if (this.rollTracker.frameNumber === 10) {
+      this._tenthFrame();
+    }
+    else {
+      if (this.rollTracker.rollNumber === 1 && this.frameScore.roll1 < 10) {
+        this._normalFrameRoll1NotStrike();
+      }
+      else {
+        this._normalFrameRoll2OrRoll1Strike();
       }
     }
-    return clone;
   }
 
-  Frame.prototype._captureSingleFrameRollsScore = function() {
-    this._resetFrameScore();
-    rollNumber = 1;
-    do {
-      this._standardFrameRoutine(rollNumber);
-      rollNumber += 1;
-    } while (this.frameScore.frameTotal < 10 && rollNumber < 3);
+  Frame.prototype._getRollScore = function() {
+    return this.rollScore;
+  }
 
-    if (this.frameNumber === 10) {
-      this._extraBowlsRoutine();
+  Frame.prototype._tenthFrame = function() {
+    if (this.rollTracker.rollNumber === 1) {
+      this._tenthFrameRoll1();
     }
-    this.frameNumber += 1;
-    return this.frameScore;
-  };
+    else if (this.rollTracker.rollNumber === 2) {
+      this._tenthFrameRoll2();
+    }
+    else {
+      this.gameOver = true;
+    }    
+  }
+
+  Frame.prototype._tenthFrameRoll1 = function() {
+    this.rollTracker.rollNumber += 1;
+    if (this.frameScore.roll1 <10) {
+      this.rollTracker.maxRollScore -= this.frameScore.roll1;
+    }
+    else {
+      this.rollTracker.maxRollScore = 10;
+    }    
+  }
+
+  Frame.prototype._tenthFrameRoll2 = function() {
+    if (this.frameScore.frameTotal < 10) {
+      this.gameOver = true;
+    }
+    else {
+      this.rollTracker.rollNumber += 1;
+    }    
+  }
+
+  Frame.prototype._normalFrameRoll1NotStrike = function() {
+    this.rollTracker.rollNumber += 1;
+    this.rollTracker.maxRollScore -= this.frameScore.roll1;    
+  }
+
+  Frame.prototype._normalFrameRoll2OrRoll1Strike = function() {
+    this.rollTracker.frameNumber += 1;
+    this.rollTracker.rollNumber = 1;
+    this.rollTracker.maxRollScore = 10;    
+  }
 
   Frame.prototype._resetFrameScore = function() {
     this.frameScore.frameTotal = 0;
     this.frameScore.roll1 = 0;
     this.frameScore.roll2 = 0;
-  }
-
-  Frame.prototype._standardFrameRoutine = function(rollNumber) {
-    pinsDowned = this.roll.pinsDownOnRoll(this.frameNumber, rollNumber);
-    this._addRollScores(pinsDowned, rollNumber);
-  }
-
-
-  Frame.prototype._addRollScores = function(pinsDowned, rollNumber) {
-    if (rollNumber === 1) {
-      this._addRoll1Score(pinsDowned);
-    }
-    else {
-      this._addRoll2Score(pinsDowned);      
-    }    
-  }
-
-  Frame.prototype._addRoll1Score = function(pinsDowned) {
-    this.frameScore.roll1 = pinsDowned;
-    this.frameScore.frameTotal += pinsDowned;
-  }
-
-  Frame.prototype._addRoll2Score = function(pinsDowned) {
-    this.frameScore.roll2 = pinsDowned;
-    this.frameScore.frameTotal += pinsDowned;
-  }
-
-  Frame.prototype._extraBowlsRoutine = function() {
-    if (this.frameScore.frameTotal === 10) {
-      this._firstExtraBowl();
-    }
-    if (this.frameScore.roll1 === 10) {
-      this._secondExtraBowl();
-    }    
-  }
-
-  Frame.prototype._firstExtraBowl = function() {
-    this.frameScore.roll3 = this.roll.pinsDownOnRoll(this.frameNumber, 3);
-    this.frameScore.frameTotal += this.frameScore.roll3;
-  }
-
-  Frame.prototype._secondExtraBowl = function() {
-    this.frameScore.roll4 = this.roll.pinsDownOnRoll(this.frameNumber, 4);
-    this.frameScore.frameTotal += this.frameScore.roll4;
   }
 
 };
