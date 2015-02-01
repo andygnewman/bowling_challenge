@@ -5,6 +5,7 @@ this.score = new Score();
 
 this.scoreBoard = "hello world";
 
+
   Game.prototype.populateScore = function() {
 
     this._putFrameScoreInScoreBoard();
@@ -37,6 +38,13 @@ this.scoreBoard = "hello world";
         } 
         this.scoreBoard += "</tr>";
     }
+  }
+
+  Game.prototype.populateMaxScoreDropDown = function() {
+    this.maxScoreDropDown = "";
+    for (var i = 0; i <= this.frame.rollTracker.maxRollScore; i++) {
+      this.maxScoreDropDown += "<option value=" + i + ">" + i + "</option>";
+    } 
   }
 
 };

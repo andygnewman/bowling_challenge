@@ -29,8 +29,20 @@
       </section>
     
       <section class="col-4-10">
-        <table id="score-board">
-        </table>
+        <section class="row-3">
+          <p>Please enter your score for:</p>
+          <p>Frame: <span class="frame-number"></span>
+           Ball: <span class="ball-number"></span> 
+           <select name="bowlscore" form="scoreentry" id="score-dropdown">
+           </select>
+          <form action='#' id="scoreentry"> 
+            <input type="submit" value="submit"/>
+          </form>
+        </section>
+        <section class="row-4">
+          <table id="score-board">
+          </table>
+        </section>
       </section>      
     
     </section>
@@ -38,7 +50,6 @@
   </section>
   
   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-  <script src="js/roll.js"></script>
   <script src="js/frame.js"></script>
   <script src="js/score.js"></script>
   <script src="js/game.js"></script>  
