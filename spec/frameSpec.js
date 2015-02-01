@@ -2,7 +2,6 @@ describe("a frame", function() {
 
   beforeEach(function() {
     frame = new Frame();
-    frame.resetFrameScore();
   });
 
   var rollMultipleBalls = function(numBalls) {
