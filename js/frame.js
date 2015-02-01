@@ -8,7 +8,6 @@ var Frame = function() {
 
   Frame.prototype.updateRollScore = function(userRollScore) {
     this.rollScore = parseInt(userRollScore);
-    console.log(this.rollScore);
   }
 
   Frame.prototype.updateFrameWithScoreAndAdvanceRoll = function() {
@@ -27,19 +26,19 @@ var Frame = function() {
     return clone;    
   }
 
-  Frame.prototype.resetFrameScore = function() {
+  Frame.prototype._updateFrameWithScore = function() {
+    if (this.rollTracker.rollNumber === 1) {
+      this._resetFrameScore();
+    }
+    this.frameScore["roll" + this.rollTracker.rollNumber] = this._getRollScore();
+    this.frameScore.frameTotal += this._getRollScore();
+  }
+
+  Frame.prototype._resetFrameScore = function() {
     this.frameScore.frameTotal = 0;
     this.frameScore.roll1 = 0;
     this.frameScore.roll2 = 0;
     this.frameNew = true;
-  }
-
-  Frame.prototype._updateFrameWithScore = function() {
-    this.frameScore["roll" + this.rollTracker.rollNumber] = this._getRollScore();
-    this.frameScore.frameTotal += this._getRollScore();
-    if (this.rollTracker.rollNumber === 2) {
-      this.frameNew = false;
-    }
   }
 
   Frame.prototype._advanceRoll = function() {
@@ -83,6 +82,7 @@ var Frame = function() {
   }
 
   Frame.prototype._tenthFrameRoll2 = function() {
+    this.frameNew = false;
     if (this.frameScore.frameTotal < 10) {
       this.gameOver = true;
     }
@@ -97,11 +97,12 @@ var Frame = function() {
   }
 
   Frame.prototype._normalFrameRoll2OrRoll1Strike = function() {
+    if (this.rollTracker.rollNumber !== 1) {
+      this.frameNew = false;
+    }   
     this.rollTracker.frameNumber += 1;
     this.rollTracker.rollNumber = 1;
-    this.rollTracker.maxRollScore = 10;   
+    this.rollTracker.maxRollScore = 10;
   }
-
-
 
 };

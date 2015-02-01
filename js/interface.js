@@ -23,6 +23,7 @@ var game = new Game();
   game.frame.updateFrameWithScoreAndAdvanceRoll();
   game.populateScore();
   game.populateScoreBoard();
+  console.log(game.frame.frameNew);
   console.log(game.score.board);
   game.populateMaxScoreDropDown();
   $('#score-board').html($(game.scoreBoard)); 
