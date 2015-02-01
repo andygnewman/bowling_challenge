@@ -11,15 +11,26 @@ var game = new Game();
   game.populateMaxScoreDropDown();
   $('#score-board').html($(game.scoreBoard));
   $('#score-dropdown').html($(game.maxScoreDropDown));
+  $('#frame-number').text(game.frame.rollTracker.frameNumber);
+  $('#ball-number').text(game.frame.rollTracker.rollNumber);
 
-
-  // $('.start-game').on('click', function(event) {
-  // event.preventDefault();
-  // game.runFrames();
-  // game.populateScoreBoard();
-  // $('#score-board').html($(game.scoreBoard));  
+  
+  $('#score-entry').on('submit', function(event) {
+  event.preventDefault();
+  var bowl = $("#score-dropdown option:selected").val();
+  console.log(bowl);
+  game.frame.updateRollScore(bowl);
+  game.frame.updateFrameWithScoreAndAdvanceRoll();
+  game.populateScore();
+  game.populateScoreBoard();
+  console.log(game.score.board);
+  game.populateMaxScoreDropDown();
+  $('#score-board').html($(game.scoreBoard)); 
+  $('#score-dropdown').html($(game.maxScoreDropDown));
+  $('#frame-number').text(game.frame.rollTracker.frameNumber);
+  $('#ball-number').text(game.frame.rollTracker.rollNumber); 
   });
 
 
 
-// });
+});

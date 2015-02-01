@@ -8,6 +8,7 @@ var Frame = function() {
 
   Frame.prototype.updateRollScore = function(userRollScore) {
     this.rollScore = parseInt(userRollScore);
+    console.log(this.rollScore);
   }
 
   Frame.prototype.updateFrameWithScoreAndAdvanceRoll = function() {
