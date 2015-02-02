@@ -7,21 +7,6 @@ var RefreshScores = function() {
     this._iterateOverFramesForCumulativeScores(board);
   }
 
-  // RefreshScores.prototype.getScore = function(frameIndex, property) {
-  //   if (this.board[frameIndex]) {
-  //     frame = this.board[frameIndex];
-  //     if (frame[property]) {
-  //       return frame[property];  
-  //     }
-  //     else {
-  //       return ""
-  //     }
-  //   }
-  //   else {
-  //     return "";
-  //   }
-  // }
-
   RefreshScores.prototype._iterateOverFramesForCumulativeScores = function(board) {
     board[0].cumulativeTotal = board[0].frameTotal;
     if (board.length > 1) {

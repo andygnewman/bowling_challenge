@@ -1,8 +1,23 @@
 @import url('normalize.css');
 @import url('grid.css');
 
+body {
+  background-image: url("../images/tenpinbowling2.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+}
+
 a:hover, a:visited, a:active, a:link {
   text-decoration: none;
   color: black;
+}
+
+.col-6-10 {
+  padding-left: 10%;
+}
+
+td {
+  width: 20%;
 }
 
