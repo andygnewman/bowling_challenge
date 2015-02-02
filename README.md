@@ -33,13 +33,25 @@ A Perfect Game is when the player rolls 12 strikes (10 regular strikes and 2 str
 
 
 ##Notes from undertaking the challenge
-As always the tough part of this was determining the "class" responsibilities, which we hadn't encountered in the thermostat walkthrough.
-The model I came up with;
-- roll => captures input of number of pins downed
-- frame => determines how many rolls in a frame (eg. if get strike on 1st bowl), executes them and keeps the framescore
-- score => calculates cumulative scores, managing the extra points for strikes and spares
-- game => controls the frames, takes the score from the frame and puts it in the score(board) and runs any extra bowls required for strikes / spares in the final frame.
+As always the tough part of this was determining the "class" responsibilities, which we hadn't encountered in the thermostat walkthrough. I had three iterations of this, with the third iteration having;
 
-I'm reasonably comfortable with this against solid principles, though am sure there is room for improvement.
+- scoreBoard => manages the array of frames and adds new bowl scores to the board
+- manageScores => iterates over the scoreBoard updating frame scores for spares and strikes and cumulative totals
+- rollTracker => manages where in the game it is (frame number / roll number and max score permissible on next roll) 
+- scoreBoardTable => creates the html required to display the table in the interface
+- interface => captures the current roll score and marshalls the other objects
 
-Next steps would be to create a front end for the scoreboard, including a mechanic to get the user to input the number of pins downed. This input should be along the lines of a drop down box of pre-selected values (eg. 1st bowl 0 - 10, 2nd bowl, if required, 0 - (10 - the result of bowl 1)). 
+It works to specified requirements*, with a front end.
+* except for a game over and display of roll3 score on final frame.
+
+
+The code review with Ben highlighted that there were issues with this model;
+- manageScores would be better holding the scoreboard object than the scoreBoard (whose sole responsibility is to add a single score)
+- rollTracker was seen as a "God" class knowing all about everything (though in my opinion it only knows the current game position)
+
+Other issues to address;
+- use var in defining local variables, without var, JavaScript treats them as local (whereas Ruby would treat them as local).
+- for generating table templates, moustache is a good library.
+
+
+ 
