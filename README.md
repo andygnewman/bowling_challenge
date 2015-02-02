@@ -53,5 +53,5 @@ Other issues to address;
 - use var in defining local variables, without var, JavaScript treats them as local (whereas Ruby would treat them as local).
 - for generating table templates, moustache is a good library.
 
-
+![alt tag](https://raw.github.com/username/projectname/branch/path/images/BowlingImageScreenshot.png)
  
