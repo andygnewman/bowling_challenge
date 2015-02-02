@@ -25,76 +25,69 @@ var RefreshScores = function() {
   RefreshScores.prototype._iterateOverFramesForCumulativeScores = function(board) {
     board[0].cumulativeTotal = board[0].frameTotal;
     if (board.length > 1) {
-      for (var frameIndex = 1; frames < board.length; frames += 1) {
-      board[frameIndex].cumulativeTotal = board[frameIndex - 1].cumulativeTotal + board[frameIndex].frameTotal;
+      for (var frameIndex = 1; frameIndex < board.length; frameIndex += 1) {
+        board[frameIndex].cumulativeTotal = board[frameIndex - 1].cumulativeTotal + board[frameIndex].frameTotal;
       }
-    }    
+    } 
   }
 
-  Score.prototype._checkForSparesAndStrikes = function() {
-    this._checkForSpare();
-    this._checkForStrike();
+  RefreshScores.prototype._checkForSparesAndStrikes = function(board) {
+    this._checkForSpare(board);
+    this._checkForStrike(board);
   }
 
-  Score.prototype._checkForSpare = function() {
-    previousFrame = this.board[this.board.length - 2];
-    thisFrame =  this.board[this.board.length - 1];
+  RefreshScores.prototype._checkForSpare = function(board) {
+    previousFrame = board[board.length - 2];
+    thisFrame =  board[board.length - 1];
     if (this._checkWhetherSpareScoredOnPreviousFrame(previousFrame)) {
       previousFrame.frameTotal += thisFrame.roll1;
     }
   }
 
-  Score.prototype._checkWhetherSpareScoredOnPreviousFrame = function(previousFrame) {
+  RefreshScores.prototype._checkWhetherSpareScoredOnPreviousFrame = function(previousFrame) {
     if (previousFrame.frameTotal === 10 && previousFrame.roll2 > 0) {
       return true;
     }
   }
 
-  Score.prototype._checkForStrike = function() {
-    previousFrame = this.board[this.board.length - 2];
-    thisFrame =  this.board[this.board.length - 1];
-    twoFramesAgo = this.board[this.board.length - 3];
+  RefreshScores.prototype._checkForStrike = function(board) {
+    previousFrame = board[board.length - 2];
+    thisFrame = board[board.length - 1];
+    twoFramesAgo = board[board.length - 3];
     this._strikeOnPreviousFrame(previousFrame, thisFrame);
-    this._strikeTwoFramesAgo(previousFrame, thisFrame, twoFramesAgo);
-    this._stikePreviousFrameAndFinalFrame(previousFrame, thisFrame);
+    if (board.length > 2) {
+      this._strikeTwoFramesAgo(previousFrame, thisFrame, twoFramesAgo);
+    }
   }
 
-  Score.prototype._strikeOnPreviousFrame = function(previousFrame, thisFrame) {
+  RefreshScores.prototype._strikeOnPreviousFrame = function(previousFrame, thisFrame) {
     if (this._checkWhetherStrikeScoredOnPreviousFrame(previousFrame)) {
       this._addAdditionalScoreForStrike(previousFrame, thisFrame);
     }  
   }
 
-  Score.prototype._strikeTwoFramesAgo = function(previousFrame, thisFrame, twoFramesAgo) {
-    if (this.board.length > 2 && twoFramesAgo.roll1 === 10 && previousFrame.roll1 === 10) {
+  RefreshScores.prototype._strikeTwoFramesAgo = function(previousFrame, thisFrame, twoFramesAgo) {
+    if (twoFramesAgo.roll1 === 10 && previousFrame.roll1 === 10) {
       this._addAdditionalScoreForConsecutiveStrikes(twoFramesAgo, previousFrame, thisFrame);
     }    
   }
 
-  Score.prototype._stikePreviousFrameAndFinalFrame = function(previousFrame, thisFrame) {
-    if (this.board.length === 10 && previousFrame.roll1 === 10 && thisFrame.roll1 === 10) {
-      if (previousFrame.frameTotal !== previousFrame.roll1 + thisFrame.roll1 + thisFrame.roll2) {
-        previousFrame.frameTotal += thisFrame.roll2;
-      }
-    }    
-  }
-
-  Score.prototype._checkWhetherStrikeScoredOnPreviousFrame = function(previousFrame) {
+  RefreshScores.prototype._checkWhetherStrikeScoredOnPreviousFrame = function(previousFrame) {
     if (previousFrame.roll1 === 10) {
       return true;
     }
   }  
 
-  Score.prototype._addAdditionalScoreForStrike = function(previousFrame, thisFrame) {
+  RefreshScores.prototype._addAdditionalScoreForStrike = function(previousFrame, thisFrame) {
     if (previousFrame.frameTotal === (previousFrame.roll1 + thisFrame.roll1)) {
       previousFrame.frameTotal += thisFrame.roll2;      
     }
-    else {
+    if (previousFrame.frameTotal === previousFrame.roll1) {
       previousFrame.frameTotal += thisFrame.roll1;
     }
   }
 
-  Score.prototype._addAdditionalScoreForConsecutiveStrikes = function(twoFramesAgo, previousFrame, thisFrame) {
+  RefreshScores.prototype._addAdditionalScoreForConsecutiveStrikes = function(twoFramesAgo, previousFrame, thisFrame) {
     if (twoFramesAgo.frameTotal !== (twoFramesAgo.roll1 + previousFrame.roll1 + thisFrame.roll1)) {
       twoFramesAgo.frameTotal += thisFrame.roll1;   
     }
