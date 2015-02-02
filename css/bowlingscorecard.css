@@ -6,6 +6,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center; 
+  font-family: Verdana, Geneva, sans-serif;
 }
 
 a:hover, a:visited, a:active, a:link {
@@ -15,9 +16,16 @@ a:hover, a:visited, a:active, a:link {
 
 .col-6-10 {
   padding-left: 10%;
+  text-align: center;
+}
+
+.row-3 {
+  font-weight: bold;
 }
 
 td {
   width: 20%;
+  padding-top: 0.5em;
 }
+
 

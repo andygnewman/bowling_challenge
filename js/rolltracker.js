@@ -40,7 +40,6 @@ var RollTracker = function() {
   }
 
   RollTracker.prototype._tenthFrameRoll2 = function(bowlScore) {
-    console.log(bowlScore);
     if (bowlScore === this.tracker.maxRollScore) {
       this.tracker.rollNumber += 1;
       this.tracker.maxRollScore = 10;      

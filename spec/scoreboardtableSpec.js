@@ -10,7 +10,3 @@ describe("Score Board HTL", function() {
   });
 
 });
-
-'<tr><td>Frame</td><td>cumulativeTotal</td><td>frameTotal</td><td>roll1</td><td>roll2</td></tr>
-<tr><td>1</td><td>7</td><td>7</td><td>3</td><td>4</td>
-<tr><td>2</td><td>16</td><td>9</td><td>9</td>'

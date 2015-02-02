@@ -1,7 +1,7 @@
 console.log("hello world");
 
   var scoreboard = new Scoreboard();
-  var refreshscores = new RefreshScores();
+  var managescores = new ManageScores();
   var rollTracker = new RollTracker();
   var scoreBoardTable = new ScoreBoardTable();
 
