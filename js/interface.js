@@ -24,7 +24,7 @@ console.log("hello world");
   var bowlScore = parseInt($("#score-dropdown option:selected").val());
   scoreboard.addBowlToScoreBoard(bowlScore, rollTracker.tracker.frameNumber, rollTracker.tracker.rollNumber);
   rollTracker.advanceRoll(bowlScore);
-  refreshscores.refreshCumulativeScores(scoreboard.board);
+  managescores.refreshScores(scoreboard.board);
   $('#score-board').html($(scoreBoardTable.returnScoreBoardHTML(scoreboard.board))); 
   $('#score-dropdown').html($(populateMaxScoreDropDown()));
   $('#frame-number').text(rollTracker.tracker.frameNumber);
