@@ -1,5 +1,48 @@
 # Bowling Scorecard Challenge
-## Makers Academy Week 5
+
+## Makers Academy Week 5 Weekend Challenge
+
+Solo weekend challenge after first week of learning JavaScript, to create a single player ten pin bowling scorecard, operating client side.
+
+### Technology used
+
+- JavaScript
+- Jasmine
+- HTML
+- CSS
+
+![Bowling Scorecard Screenshot](https://github.com/andygnewman/bowling_challenge/blob/master/images/BowlingChallengeScreenshot.png)
+
+
+### How to run the game
+
+From the command line in the root of the project directory `$ open bowlingScorecard.html`
+
+### How to run the tests
+
+From the command line in the root of the project directory `$ open SpecRunner.html`
+
+### Key Learnings
+- Determining the "class" responsibilities, which we hadn't encountered in our JavaScript classroom learning.
+- My model has
+ - scoreBoard => manages the array of frames and adds new bowl scores to the board
+ - manageScores => iterates over the scoreBoard updating frame scores for spares and strikes and cumulative totals
+ - rollTracker => manages where in the game it is (frame number / roll number and max score permissible on next roll) 
+ - scoreBoardTable => creates the html required to display the table in the interface
+ - interface => captures the current roll score and marshalls the other objects
+- Use of var in defining local variables - without var, JavaScript treats them as global (whereas Ruby treats them as local)
+- Moustache / Handlebars would be a good library for generating templates (I had handcrafted the code to do this myself in scoreBoardTable)
+
+It works to specified requirements*, with a front end.
+* except for management of game over at the end of the tenth frame and display of possible bonus (roll 3) score on final frame.
+
+### Further Development Opportunities
+
+- implement 'game over' display
+- improve display through using templating library such as handlebars
+- revisit domain model to improve accountabilities of classes
+
+## Makers Academy Week 5 Challenge Requirements
 
 __Test time__: Friday, the entire day + the weekend if you need it
 Feel free to use google, your notes, books, etc but work on your own
@@ -30,26 +73,3 @@ A Gutter Game is when the player never hits a pin (20 zero scores).
 #### Perfect Game
 
 A Perfect Game is when the player rolls 12 strikes (10 regular strikes and 2 strikes for the bonus in the 10th frame). The Perfect Game scores to 300 points.
-
-
-##Notes from undertaking the challenge
-As always the tough part of this was determining the "class" responsibilities, which we hadn't encountered in the thermostat walkthrough. I had three iterations of this, with the third iteration having;
-
-- scoreBoard => manages the array of frames and adds new bowl scores to the board
-- manageScores => iterates over the scoreBoard updating frame scores for spares and strikes and cumulative totals
-- rollTracker => manages where in the game it is (frame number / roll number and max score permissible on next roll) 
-- scoreBoardTable => creates the html required to display the table in the interface
-- interface => captures the current roll score and marshalls the other objects
-
-It works to specified requirements*, with a front end.
-* except for a game over and display of roll3 score on final frame.
-
-
-The code review with Ben highlighted that there were issues with this model;
-- manageScores would be better holding the scoreboard object than the scoreBoard (whose sole responsibility is to add a single score)
-- rollTracker was seen as a "God" class knowing all about everything (though in my opinion it only knows the current game position)
-
-Other issues to address;
-- use var in defining local variables, without var, JavaScript treats them as local (whereas Ruby would treat them as local).
-- for generating table templates, moustache is a good library.
- 
